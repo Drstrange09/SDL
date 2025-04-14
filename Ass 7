@@ -1,0 +1,165 @@
+//Implement the login and logout web application to handle the session management using 
+session and cookies. (PHP) 
+
+ 1. db_connect.php
+
+ <? php
+ $servername = "localhost";
+ $db_username = "root"; // Default for XAMPP/WAMP
+ $db_password = ""; // Leave empty for XAMPP/WAMP
+ $dbname = "login_system";           
+// Create a connection
+ $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+ // Check connection
+ if ($conn->connect_error) {
+ die("Connection failed: " . $conn->connect_error);
+ }
+ ?>
+
+
+
+ 2. login.php
+ <? php
+ session_start();
+ include("db_connect.php");
+ if (isset($_SESSION['username'])) {
+ header("Location: home.php");
+ exit;
+ }
+ if ($_SERVER["REQUEST_METHOD"] == "POST") {
+ $username = trim($_POST["username"]);
+ $password = trim($_POST["password"]);
+ // Using a prepared statement to prevent SQL injection
+ $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
+ $stmt->bind_param("s", $username);
+ $stmt->execute();
+ $result = $stmt->get_result();
+if ($result && $result->num_rows == 1) {
+ $user = $result->fetch_assoc();
+ // Debugging -Check if user is fetched correctly
+ var_dump($user); 
+if (password_verify($password, $user['password'])) {
+ session_regenerate_id(true);
+ $_SESSION['username'] = $user['username'];
+ header("Location: home.php");
+ exit;
+ } else {
+ $error = "Invalid password!";
+ }
+ } else {
+ $error = "Invalid username!";
+ }
+ $stmt->close();
+ }
+ ?>
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Login</title>
+ </head>
+ <body>
+ <h2>Login</h2>
+ <?php if(isset($error)) { echo "<p style='color:red;'>$error</p>"; } ?>
+ <form method="post">
+ <label>Username:</label>
+ <input type="text" name="username" required><br><br>
+ <label>Password:</label>
+ <input type="password" name="password" required><br><br>
+ <label>Remember Me:</label>
+<input type="checkbox" name="remember"><br><br>
+ <input type="submit" value="Login">
+ </form>
+ </body>
+ </htm l>
+
+
+ 3. home.php
+
+ <? php
+ session_start();
+ if (!isset($_SESSION['username'])) {
+ if (isset($_COOKIE['username'])) {
+ $_SESSION['username'] = $_COOKIE['username'];
+ } else {
+ header("Location: login.php");
+ exit;
+ }
+ }
+ ?
+ >
+ <!DOCTYPE html> <html > <head>  <title>Home</title> </head> <body> 
+<h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+ <p>You are logged in.</p>
+ <p><a href="logout.php">Logout</a></p>
+ </body>
+ </htm l>
+
+
+
+ 4.logout.php
+
+ <? php
+ session_start();
+ session_unset();
+ session_destroy();
+ if (isset($_COOKIE['username'])) {
+ setcookie("username", "", time() -3600, "/");
+}
+ header("Location: login.php");
+ exit;
+ ?>
+ <? php
+ session_start();
+ session_unset();
+ session_destroy();
+ if (isset($_COOKIE['username'])) {
+ setcookie("username", "", time() -3600, "/");
+ }
+ header("Location: login.php");
+ exit;
+ ?>
+
+
+
+ 5. Generate hashed password
+ hash_password.php
+
+ <? php
+ session_start();
+ session_unset();
+ session_destroy();
+ if (isset($_COOKIE['username'])) {
+ setcookie("username", "", time() -3600, "/");
+ }
+ header("Location: login.php");
+ exit;
+ ?>
+
+
+
+
+
+Step 1: Set Up the Database in phpMyAdmin
+Open phpMyAdmin:
+
+In your web browser, go to http://localhost/phpmyadmin.
+Create a Database:
+
+Click on the "Databases" tab.
+Enter login_system as the database name and click "Create".
+Create the Users Table:
+
+Select the login_system database.
+Click on the "SQL" tab and run the following SQL query to create the users table:
+sql
+CREATE TABLE `users` (  
+    `id` INT(11) NOT NULL AUTO_INCREMENT,  
+    `username` VARCHAR(50) NOT NULL UNIQUE,  
+    `password` VARCHAR(255) NOT NULL,  
+    PRIMARY KEY (`id`)  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+Insert a Test User:
+
+You need to generate a hashed password and insert a test user into the table. You can either use the built-in password hashing in PHP or use a simple script.
