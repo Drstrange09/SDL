@@ -1,0 +1,95 @@
+// Write a XML schema to describe and validate the XML data.  
+
+Shiporder.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<shiporder orderid="123"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="shiporder.xsd">
+<orderperson>ABCD1</orderperson>
+<shipto>
+<name>Atharva Toke</name>
+<address>Swapnapurti Society</address>
+<city>Pune</city>
+<country>India</country>
+</shipto>
+<item>
+<title>9185756421</title>
+<note>Special Edition</note>
+<quantity>1</quantity>
+<price>24555.77</price>
+</item>
+<item>
+<title>Superbike</title>
+<quantity>10</quantity>
+<price>124566</price>
+</item>
+</shiporder>
+
+
+
+Shiporder.xsd
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="shiporder">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="orderperson" type="xs:string"/>
+<xs:element name="shipto">
+
+<xs:complexType>
+<xs:sequence>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="address" type="xs:string" minOccurs="1" />
+<xs:element name="city" type="xs:string"/>
+<xs:element name="country" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="item" maxOccurs="unbounded">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="title" type="xs:string"/>
+<xs:element name="note" type="xs:string" minOccurs="0"/>
+<xs:element name="quantity" type="xs:positiveInteger"/>
+<xs:element name="price" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+<xs:attribute name="orderid" type="xs:string" use="required"/>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+
+
+//Open Your XML File in Notepad++.
+Go to the Plugins menu.
+Hover over XML Tools.
+Select Validate Now (you can also use Validate with Schema but this may require setting up the schema location properly).
+If your XML validates, you will see a message indicating success. If there are errors, Notepad++ will display them.
+
+
+
+//Optional: Installing and Setting Up XAMPP
+If you want to run a local server for other projects while working with XML, follow these steps:
+
+Step 1: Download XAMPP
+Go to the XAMPP Official Website.
+Download the installer for your operating system.
+Step 2: Install XAMPP
+Run the installer and follow the setup instructions.
+Choose the components you want to install (you can choose both Apache and MySQL).
+Finish the installation.
+Step 3: Start XAMPP
+Open the XAMPP Control Panel.
+Start the Apache server by clicking the Start button next to it.
+Step 4: Place Your Files in the Correct Directory
+Go to the directory where XAMPP is installed, typically C:\xampp\htdocs.
+Create a new folder (e.g., xml_testing).
+Copy your shiporder.xml and shiporder.xsd files into this new folder.
+Step 5: Access Files via Browser
+Open your web browser.
+Go to http://localhost/xml_testing/shiporder.xml to see the XML file.
+Use a similar URL for the XSD file, but it wouldn’t be directly viewable like XML.
