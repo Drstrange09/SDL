@@ -1,0 +1,115 @@
+// Design Employee Registration form and store and retrieve the data using PHP and MySql.
+
+ contact.html 
+
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <title>Contact Form - PHP/MySQL</title> 
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script> 
+  </head> 
+ 
+  <body class="w-screen h-screen flex justify-center items-center"> 
+    <form action="contact.php" method="post" class="flex flex-col justify-center 
+gap-3 w-sm bg-slate-100 rounded-xl p-8"> 
+      <label class="flex flex-col gap-1"> 
+        First Name 
+        <input type="text" name="fname" id="fname" class="rounded px-2 py-1 
+bg-white" /> 
+      </label> 
+      <label class="flex flex-col gap-1"> 
+        Middle Name 
+        <input type="text" name="mname" id="mname" class="rounded px-2 py-1 
+bg-white" /> 
+      </label> 
+      <label class="flex flex-col gap-1"> 
+        Last Name 
+        <input type="text" name="lname" id="lname" class="rounded px-2 py-1 
+bg-white" /> 
+      </label> 
+      <label class="flex flex-col gap-1"> 
+        Password 
+        <input type="password" name="pwd" id="pwd" class="rounded px-2 py-1 
+bg-white" /> 
+      </label> 
+      <button type="submit" class="bg-blue-500 text-white py-2 
+rounded">Submit</button> 
+    </form> 
+  </body> 
+</html> 
+ 
+ 
+ 
+ 
+contact.php 
+
+<?php 
+$con = mysqli_connect('localhost', 'root', '', 'contact'); 
+// get the post records 
+$txtfname = $_POST['fname']; 
+$txtmname = $_POST['mname']; 
+$txtlname = $_POST['lname']; 
+$txtpwd = $_POST['pwd']; 
+// database insert SQL code 
+$sql = "INSERT INTO `registration` (`Id`, `fname`, `mname`, `lname`, `pwd`) 
+VALUES ('0', '$txtfname', '$txtmname', '$txtlname', '$txtpwd')"; 
+// insert in database  
+$rs = mysqli_query($con, $sql); 
+if($rs) 
+{ 
+echo "Contact Records Inserted <br> <br>"; 
+} 
+$sql = 'SELECT * FROM registration'; 
+$retval = mysqli_query($con, $sql); 
+while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)) { 
+echo "EMP ID :{$row['id']}  <br> ". 
+"EMP First NAME : {$row['fname']} <br> ". 
+"EMP middle name : {$row['mname']} <br> ". 
+"EMP Last name : {$row['lname']} <br> ". 
+"--------------------------------<br>"; 
+} 
+echo "Fetched data successfully\n"; 
+?> 
+
+
+
+
+
+Step 1: Set Up the Database and Table in phpMyAdmin
+Open XAMPP Control Panel:
+Start Apache and MySQL services.
+Access phpMyAdmin:
+
+Open a web browser and navigate to :           http://localhost/phpmyadmin.
+Create the Database:
+
+Click on the "Databases" tab.
+Enter contact as the database name and click "Create".
+Select the Database:
+
+Click on the contact database from the list on the left panel.
+Create the registration Table:
+
+Click on the "SQL" tab at the top.
+Copy and paste the following SQL query into the SQL editor:
+sql
+
+
+CREATE TABLE `registration` (  
+    `Id` INT(11) NOT NULL AUTO_INCREMENT,  
+    `fname` VARCHAR(50) NOT NULL,  
+    `mname` VARCHAR(50) DEFAULT NULL,  
+    `lname` VARCHAR(50) NOT NULL,  
+    `pwd` VARCHAR(50) NOT NULL,  
+    PRIMARY KEY (`Id`)  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+
+
+
+Execute the SQL Query:
+
+Click on the "Go" button to run the query. This will create the registration table.
+
+Open this after that
+http://localhost/contact.html
