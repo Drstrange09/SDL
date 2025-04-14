@@ -1,0 +1,45 @@
+// Construct a suitable static web application using HTML and CSS and Bootstrap. Use and configuration of Web Server. (Apache Tomcat).
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Timetable</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        th { background-color: #007bff; color: white; }
+        td { height: 100px; vertical-align: middle; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">Weekly Timetable</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>8:00 - 9:00</td><td>Math</td><td>English</td><td>Science</td><td>History</td><td>PE</td></tr>
+                <tr><td>9:00 - 10:00</td><td>Biology</td><td>Math</td><td>English</td><td>Science</td><td>Art</td></tr>
+                <tr><td>10:00 - 11:00</td><td>History</td><td>Biology</td><td>Math</td><td>English</td><td>CS</td></tr>
+                <tr><td>11:00 - 12:00</td><td>PE</td><td>History</td><td>Biology</td><td>Math</td><td>Science</td></tr>
+                <tr><td colspan="5" class="text-center">Lunch Break</td></tr>
+                <tr><td>1:00 - 2:00</td><td>Science</td><td>PE</td><td>History</td><td>Biology</td><td>Math</td></tr>
+                <tr><td>2:00 - 3:00</td><td>Art</td><td>Science</td><td>PE</td><td>English</td><td>History</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
