@@ -1,0 +1,161 @@
+//Create a webpage using PHP to demonstrate the Inheritance concept such as: to create a Class shape and its subclass triangle, square and circle and display area of the selected shape.( use the concept of Inheritance) Display menu( use radio button) a) Triangle b) Square c) Circle. 
+
+index.html 
+
+<html> 
+<head> 
+    <script> 
+        function changeShape() { 
+            const option = 
+document.querySelector("input[name='op']:checked").value; 
+            document.getElementById("coneCylinder").style.display = (option === 
+"1" || option === "2") ? "block" : "none"; 
+            document.getElementById("sphere").style.display = (option === "3") ? 
+"block" : "none"; 
+        } 
+    </script> 
+</head> 
+<body> 
+    <form action="index.php" method="GET"> 
+        <center> 
+            <h1>Select Shape</h1> 
+            <label> 
+                <input type="radio" name="op" value="1" onclick="changeShape()" 
+/> 
+                Cone 
+            </label> 
+            <label> 
+                <input type="radio" name="op" value="2" onclick="changeShape()" 
+/> 
+                Cylinder 
+            </label> 
+            <label> 
+                <input type="radio" name="op" value="3" onclick="changeShape()" 
+/> 
+                Sphere 
+            </label> 
+            <div id="coneCylinder" style="display: none;"> 
+                <h2>For Cone & Cylinder</h2> 
+                <table> 
+                    <tr> 
+                        <td>Enter Radius</td> 
+                        <td><input type="text" name="r" /></td> 
+                    </tr> 
+                    <tr> 
+                        <td>Enter Height</td> 
+                        <td><input type="text" name="h" /></td> 
+                    </tr> 
+                    <tr> 
+                        <td></td> 
+                        <td><input type="submit" value="Submit" /></td> 
+                    </tr> 
+                </table> 
+            </div> 
+            <div id="sphere" style="display: none;"> 
+                <h2>For Sphere</h2> 
+                <table> 
+                    <tr> 
+                        <td>Enter Radius</td> 
+                        <td><input type="text" name="r1" /></td> 
+                    </tr> 
+                    <tr> 
+                        <td></td> 
+                        <td><input type="submit" value="Submit" /></td> 
+                    </tr> 
+                </table> 
+            </div> 
+        </center> 
+    </form> 
+</body> 
+</html>
+
+
+
+index.php 
+
+<?php 
+define('pi', 3.14); 
+ 
+interface shape 
+{ 
+    function calc_area($r, $h); 
+    function calc_vol($r, $h); 
+} 
+ 
+class sphere implements shape 
+{ 
+    function calc_area($r, $h) 
+    { 
+        return 4 * pi * $r * $r; 
+    } 
+ 
+    function calc_vol($r, $h) 
+    { 
+        return (4 / 3) * pi * $r * $r * $r; 
+    } 
+} 
+ 
+class cylinder implements shape 
+{ 
+    function calc_area($r, $h) 
+    { 
+        return 2 * pi * $r * ($r + $h); 
+    } 
+ 
+    function calc_vol($r, $h) 
+    { 
+        return pi * $r * $r * $h; 
+    } 
+} 
+ 
+class cone implements shape 
+{ 
+    function calc_area($r, $h) 
+    { 
+        return 0.5 * $r * $r * $h; 
+    } 
+ 
+    function calc_vol($r, $h) 
+    { 
+        return (1 / 3) * pi * $r * $r * $h; 
+    } 
+} 
+ 
+$op = isset($_GET['op']) ? $_GET['op'] : null; 
+ 
+switch ($op) { 
+    case 1: 
+        $r = isset($_GET['r']) ? (int)$_GET['r'] : 0; 
+        $h = isset($_GET['h']) ? (int)$_GET['h'] : 0; 
+        $ob = new cone(); 
+        $a = $ob->calc_area($r, $h); 
+        $v = $ob->calc_vol($r, $h); 
+        echo "Area of Cone is: " . $a . "<br>Volume of Cone is: " . $v; 
+        break; 
+ 
+    case 2: 
+        $r = isset($_GET['r']) ? (int)$_GET['r'] : 0; 
+        $h = isset($_GET['h']) ? (int)$_GET['h'] : 0; 
+        $ob = new cylinder(); 
+        $a = $ob->calc_area($r, $h); 
+        $v = $ob->calc_vol($r, $h); 
+        echo "Area of Cylinder is: " . $a . "<br>Volume of Cylinder is: " . $v; 
+        break; 
+ 
+    case 3: 
+        $r = isset($_GET['r1']) ? (int)$_GET['r1'] : 0; 
+        $ob = new sphere(); 
+        $a = $ob->calc_area($r, 0); // Height is not used in sphere calculations 
+        $v = $ob->calc_vol($r, 0); // Height is not used in sphere calculations 
+        echo "Area of Sphere is: " . $a . "<br>Volume of Sphere is: " . $v; 
+        break; 
+default: 
+echo "Invalid operation."; 
+} 
+?>
+
+
+
+on xaamp server and open browser
+http://localhost/index.html
+http://localhost/index.php
