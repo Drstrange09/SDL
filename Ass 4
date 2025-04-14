@@ -1,0 +1,49 @@
+//Demonstrate the use of arrays by creating a PHP web page e.g. Create an indexed array 
+of 20 elements (e.g. employee_name) and search whether a given name exists in the 
+array. 
+
+employee.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Employee Name</title>
+</head>
+<body>
+    <h1>Employee Name Search</h1>
+    <form method="POST" action="">
+        <label for="name">Enter Employee Name to Search:</label>
+        <input type="text" name="name" id="name" required>
+        <input type="submit" value="Search">
+    </form>
+
+    <?php
+    // Indexed array of 20 Indian employee names
+    $employee_names = [
+        "Amit Sharma", "Priya Verma", "Ravi Kumar", "Anjali Patel", "Vikas Singh",
+        "Neha Reddy", "Manoj Gupta", "Kiran Nair", "Suresh Yadav", "Pooja Mehta",
+        "Rajesh Kumar", "Deepika Singh", "Ajay Malhotra", "Sonali Deshmukh", "Kunal Joshi",
+        "Shivani Iyer", "Rakesh Kapoor", "Rekha Rathi", "Vandana Shah", "Siddharth Kapoor"
+    ];
+
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Get the name input from the user
+        $search_name = $_POST['name'];
+
+        // Search for the name in the array
+        if (in_array($search_name, $employee_names)) {
+            echo "<p>The employee '$search_name' exists in the list.</p>";
+        } else {
+            echo "<p>The employee '$search_name' does not exist in the list.</p>";
+        }
+    }
+    ?>
+</body>
+</html>
+
+
+//Open in browser and on the xaamp server
+http://localhost/employee.php
