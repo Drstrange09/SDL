@@ -1,0 +1,137 @@
+// Perform the user data validations. (Name, Password, Phone, Email, Address etc.) using JAVAScript/JQuery.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Data Validation</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+/* Center the form on the screen */
+body {
+font-family: Arial, sans-serif;
+background: linear-gradient(to right, #2c3e50, #4ca1af);
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+}
+.container {
+background: #fff;
+padding: 30px;
+border-radius: 10px;
+box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+width: 350px;
+text-align: center;
+}
+h2 {
+color: #2c3e50;
+}
+input {
+width: 100%;
+padding: 10px;
+margin: 10px 0 5px;
+border: 1px solid #ccc;
+border-radius: 5px;
+
+font-size: 16px;
+}
+.error {
+color: red;
+font-size: 14px;
+text-align: left;
+margin-bottom: 10px;
+}
+button {
+width: 100%;
+padding: 10px;
+border: none;
+background: #4ca1af;
+color: white;
+font-size: 18px;
+border-radius: 5px;
+cursor: pointer;
+transition: 0.3s;
+margin-top: 10px;
+}
+button:hover {
+background: #2c3e50;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>User Registration</h2>
+<form id="userForm">
+<input type="text" id="name" placeholder="Enter Name">
+<div class="error" id="nameError"></div>
+<input type="password" id="password" placeholder="Enter Password">
+<div class="error" id="passwordError"></div>
+<input type="text" id="phone" placeholder="Enter Phone Number">
+<div class="error" id="phoneError"></div>
+<input type="text" id="email" placeholder="Enter Email">
+<div class="error" id="emailError"></div>
+
+<input type="text" id="address" placeholder="Enter Address">
+<div class="error" id="addressError"></div>
+<button type="submit">Submit</button>
+</form>
+</div>
+<script>
+$(document).ready(function () {
+$("#userForm").submit(function (e) {
+e.preventDefault(); // Prevent form submission
+let isValid = true;
+// Reset previous errors
+$(".error").text("");
+// Name Validation
+let name = $("#name").val().trim();
+if (!/^[a-zA-Z ]{3,}$/.test(name)) {
+$("#nameError").text("Name must be at least 3 letters.");
+isValid = false;
+}
+// Password Validation
+let password = $("#password").val();
+if
+(!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(password)) {
+$("#passwordError").text("Password must be 8+ chars, with uppercase, lowercase,
+
+number & special char.");
+isValid = false;
+}
+// Phone Validation
+let phone = $("#phone").val();
+if (!/^\d{10}$/.test(phone)) {
+$("#phoneError").text("Phone number must be 10 digits.");
+isValid = false;
+}
+// Email Validation
+let email = $("#email").val();
+if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+
+$("#emailError").text("Enter a valid email address.");
+isValid = false;
+}
+// Address Validation
+let address = $("#address").val().trim();
+if (address.length === 0) {
+$("#addressError").text("Address cannot be empty.");
+isValid = false;
+}
+// If form is valid, submit it
+if (isValid) {
+alert("Form submitted successfully!");
+$("#userForm")[0].reset(); // Reset form fields
+}
+});
+// Real-time validation
+$("input").on("input", function () {
+let field = $(this).attr("id");
+$("#" + field + "Error").text(""); // Clear error message when user types
+});
+});
+</script>
+</body>
+</html>
